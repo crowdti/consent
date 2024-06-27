@@ -22,7 +22,7 @@
 			position: absolute;
 			top: 10px;
 			right: 10px;
-			width: 80px; /* adjust the width to your desired size */
+			width: 120px; /* adjust the width to your desired size */
 			height: 80px; /* adjust the height to your desired size */
 		}
 	</style>
@@ -38,17 +38,29 @@
 		const confirmationMessage = document.getElementById('confirmation-message');
 
 		button.addEventListener('click', () => {
-			confirmationMessage.textContent = 'Grazie, confermiamo la ritira del consenso per la casa';
+			confirmationMessage.textContent = 'Grazie, le confermiamo la ritira del consenso per affitto della casa nel mese designato.';
 
-			// Send email notification using Mailsac API
 			const xhr = new XMLHttpRequest();
 			xhr.open('POST', 'https://mailsac.com/api/sendmail', true);
 			xhr.setRequestHeader('Authorization', 'Bearer k_nZoofksJhOgsIN8SR70dfX5ThvfwFv46b');
 			xhr.setRequestHeader('Content-Type', 'application/json');
+
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					console.log('Email sent successfully!');
+				} else {
+					console.error('Error sending email:', xhr.statusText);
+				}
+			};
+
+			xhr.onerror = function() {
+				console.error('Error sending email:', xhr.statusText);
+			};
+
 			xhr.send(JSON.stringify({
-				to: 'events@mailsac.com',
+				to: 'event@mailsac.com',
 				subject: 'Ritiro del consenso per la casa',
-				body: 'Grazie, le confermiamo la ritira del consenso di affitto per la casa per il periodo designato. La contatteremo per il refund.'
+				body: 'Bottone premuto'
 			}));
 		});
 	</script>

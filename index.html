@@ -22,7 +22,26 @@
 </head>
 <body>
 	<h1>Ritiro il consenso</h1>
-	<button class="button">Ritiro il consenso</button>
-	<p>Hai tempo fino al 17 Luglio</p>
+	<button class="button" id="consent-button">Ritiro il consenso</button>
+	<p id="confirmation-message"></p>
+
+	<script>
+		const button = document.getElementById('consent-button');
+		const confirmationMessage = document.getElementById('confirmation-message');
+
+		button.addEventListener('click', () => {
+			confirmationMessage.textContent = 'Grazie, confermiamo la ritira del consenso per la casa';
+
+			// Send email notification
+			const xhr = new XMLHttpRequest();
+			xhr.open('POST', 'https:// mailsac.com/api/email', true);
+			xhr.setRequestHeader('Content-Type', 'application/json');
+			xhr.send(JSON.stringify({
+				to: 'event@mailsac.com',
+				subject: 'Ritiro del consenso per la casa',
+				body: 'Grazie, confermiamo la ritira del consenso per la casa'
+			}));
+		});
+	</script>
 </body>
 </html>
